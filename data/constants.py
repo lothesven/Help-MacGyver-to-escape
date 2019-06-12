@@ -1,0 +1,1 @@
+# will contains all colors and sprites
