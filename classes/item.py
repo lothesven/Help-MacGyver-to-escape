@@ -5,7 +5,9 @@
 
 import random as rd
 
-class Object:
+test = "item test"
+
+class Item:
     def __init__(self, kind, locations): # instanciation providing possible locations from level
         self.locations = locations
         self.kind = kind

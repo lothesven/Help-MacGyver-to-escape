@@ -3,6 +3,8 @@
 # moving method
 # status (alive, position, objects collected)
 
+test = "character test"
+
 class Character:
     def __init__(self):
         self.x = 0

@@ -2,6 +2,8 @@
 # while doing so, create an array of free space tiles list of tuples.
 # Each tuple in that list can be a location for collectable object's random instanciations
 
+test = "level test"
+
 class Level:
     def __init__(self): # read "maze" file and store it in a list
         self.structure = []

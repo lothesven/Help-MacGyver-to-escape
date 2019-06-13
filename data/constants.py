@@ -3,25 +3,28 @@
 from pygame import font
 import os.path
 
-directory = os.path.abspath(os.path.dirname(__file__))
+DIRECTORY = os.path.abspath(os.path.dirname(__file__))
+HEIGHT, WIDTH = 600, 600
 
-macgyver = os.path.join(directory, "images", "macgyver.png")
-guard = os.path.join(directory, "images", "guard.png")
-floor = os.path.join(directory, "images", "wallsnfloors.png")
-wall = os.path.join(directory, "images", "wallsnfloors.png")
-needle = os.path.join(directory, "images", "needle.png")
-plastic_tube = os.path.join(directory, "images", "plastic_tube.png")
-ether = os.path.join(directory, "images", "ether.png")
-siringe = os.path.join(directory, "images", "siringe.png")
+MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
+GUARD = os.path.join(DIRECTORY, "images", "guard.png")
+FLOOR = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
+WALL = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
+NEEDLE = os.path.join(DIRECTORY, "images", "needle.png")
+PLASTUBE = os.path.join(DIRECTORY, "images", "plastic_tube.png")
+ETHER = os.path.join(DIRECTORY, "images", "ether.png")
+SIRINGE = os.path.join(DIRECTORY, "images", "siringe.png")
 
-footsteps = os.path.join(directory, "sounds", "footsteps.ogg")
-error = os.path.join(directory, "sounds", "error.ogg")
-victory = os.path.join(directory, "sounds", "victory.ogg")
-failure = os.path.join(directory, "sounds", "failure.ogg")
+FOOTSTEPS = os.path.join(DIRECTORY, "sounds", "footsteps.ogg")
+ERROR = os.path.join(DIRECTORY, "sounds", "error.ogg")
+VICTORY = os.path.join(DIRECTORY, "sounds", "victory.ogg")
+FAILURE = os.path.join(DIRECTORY, "sounds", "failure.ogg")
 
-gamefont = font.SysFont("arial", 40)
+# GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Atmosphere-Regular.TTF"), 40)
 
-white = (255, 255, 255)
-black = (0, 0, 0)
-green = (0, 255, 0)
-red = (255, 0, 0)
+MAZE = os.path.join(DIRECTORY, "maze")
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)

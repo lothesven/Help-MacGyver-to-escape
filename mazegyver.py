@@ -4,20 +4,36 @@
 # coding: utf-8
 
 import pygame as pg
-import os.path
+
+import data.constants as ct
+import classes.character as ch
+import classes.item as it
+import classes.level as lv
 
 class Game:
     def __init__(self): # Game definition and settings. All classes instanciation.
-        pass
+
+        pg.init()
+
+        self.screen = pg.display.set_mode((ct.WIDTH, ct.HEIGHT))
+
+        self.running = False # Boolean that indicates whether game is running or not
+
+        pg.display.update()
 
     def start(self): # Initialization of game loop
-        pass
+        self.running = True
 
-    def running(self): # Game loop
-        pass
+        while self.running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT: # Event to break off game loop
+                    self.running = False
 
-def main(): # Game instanciation
-    pass
+        
+
+def main(): 
+    game = Game() # Game instanciation
+    game.start() # Game launch at main() call
 
 if __name__ == "__main__":
-    main() # Actual game launching command
+    main()
