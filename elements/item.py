@@ -1,11 +1,11 @@
-# objects to collect
+""" Class for different items to collect in the maze """
 # each objet is an instance of this class
-# have an object kind and position on the level
+# have an item kind and position on the level
 # have a status collected
 
 import random as rd
 
-test = "item test"
+from data import settings as st
 
 class Item:
     def __init__(self, kind, locations): # instanciation providing possible locations from level

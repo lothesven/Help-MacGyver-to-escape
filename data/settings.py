@@ -20,7 +20,8 @@ ERROR = os.path.join(DIRECTORY, "sounds", "error.ogg")
 VICTORY = os.path.join(DIRECTORY, "sounds", "victory.ogg")
 FAILURE = os.path.join(DIRECTORY, "sounds", "failure.ogg")
 
-# GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Atmosphere-Regular.TTF"), 40)
+font.init()
+GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Atmosphere-Regular.TTF"), 40)
 
 MAZE = os.path.join(DIRECTORY, "maze")
 
