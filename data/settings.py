@@ -8,8 +8,7 @@ HEIGHT, WIDTH = 600, 600
 
 MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
 GUARD = os.path.join(DIRECTORY, "images", "guard.png")
-FLOOR = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
-WALL = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
+WALLSNFLOORS = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
 NEEDLE = os.path.join(DIRECTORY, "images", "needle.png")
 PLASTUBE = os.path.join(DIRECTORY, "images", "plastic_tube.png")
 ETHER = os.path.join(DIRECTORY, "images", "ether.png")
