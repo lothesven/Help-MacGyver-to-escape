@@ -6,7 +6,7 @@ import pygame as pg
 from data import settings as st
 
 class Level:
-    def __init__(self): # read "maze" file and store it in a list
+    def __init__(self, screen): # read "maze" file and store it in a list
         self.structure = []
         self.floor_locations = []
 
@@ -18,26 +18,26 @@ class Level:
                 self.structure.append(ligne)
 
         self.wallnfloor = pg.transform.smoothscale(pg.image.load(st.WALLSNFLOORS).convert_alpha(), (800, 520))
-        self.wall = self.wallnfloor.get_rect(topleft = (640, 0), height = 40, width = 40)
-        self.floor = self.wallnfloor.get_rect(topleft = (720, 120), height = 40, width = 40)
-        self.guard = pg.transform.smoothscale(pg.image.load(st.GUARD).convert_alpha(), (40, 40))
+        self.wall = self.wallnfloor.get_rect(topleft = (640, 0), height = st.TILESIZE, width = st.TILESIZE)
+        self.floor = self.wallnfloor.get_rect(topleft = (720, 120), height = st.TILESIZE, width = st.TILESIZE)
+        self.guard = pg.transform.smoothscale(pg.image.load(st.GUARD).convert_alpha(), (st.TILESIZE, st.TILESIZE))
 
     def screening(self, screen): # method to load level images on screen
         for i in range(len(self.structure)):
                 for j in range(len(self.structure[i])):
                     if self.structure[i][j] == 'W':
-                        position_x = j * 40
-                        position_y = i * 40
-                        screen.blit(self.wallnfloor, (position_x, position_y), self.wall)
+                        x_position = j * st.TILESIZE
+                        y_position = i * st.TILESIZE
+                        screen.blit(self.wallnfloor, (x_position, y_position), self.wall)
                     elif self.structure[i][j] == '0':
-                        position_x = j * 40
-                        position_y = i * 40
-                        self.floor_locations.append((position_x, position_y)) # stores possible item locations
-                        screen.blit(self.wallnfloor, (position_x, position_y), self.floor)
+                        x_position = j * st.TILESIZE
+                        y_position = i * st.TILESIZE
+                        self.floor_locations.append((x_position, y_position)) # stores possible item locations
+                        screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
                     elif self.structure[i][j] == 'G':
-                        position_x = j * 40
-                        position_y = i * 40
-                        screen.blit(self.guard, (position_x, position_y))
+                        x_position = j * st.TILESIZE
+                        y_position = i * st.TILESIZE
+                        screen.blit(self.guard, (x_position, y_position))
 
-    def update(self, screen, position_x, position_y): # method to call when character move to blit back former character tile
-        screen.blit(self.wallnfloor, (position_x, position_y), self.floor)
+    # def update(self, screen, x_position, y_position): # method to call when character move to blit back former character tile
+    #     screen.blit(self.wallnfloor, (x_position, y_position), self.floor)

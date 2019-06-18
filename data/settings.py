@@ -5,6 +5,7 @@ import os.path
 
 DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 HEIGHT, WIDTH = 600, 600
+TILESIZE = 40
 
 MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
 GUARD = os.path.join(DIRECTORY, "images", "guard.png")
