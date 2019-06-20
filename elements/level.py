@@ -39,5 +39,5 @@ class Level:
                         y_position = i * st.TILESIZE
                         screen.blit(self.guard, (x_position, y_position))
 
-    # def update(self, screen, x_position, y_position): # method to call when character move to blit back former character tile
-    #     screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
+    def update(self, screen, x_position, y_position): # method to call when character move to blit back former character tile
+        screen.blit(self.wallnfloor, (x_position, y_position), self.floor)

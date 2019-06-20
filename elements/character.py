@@ -8,37 +8,46 @@ from data import settings as st
 
 class Character:
     def __init__(self, screen):
+        self.past_xtile = 0 # used for screen update
+        self.past_ytile = 0 # used for screen update
+        self.has_moved = False # used for screen update
         self.xtile = 0
         self.ytile = 0
         self.items = []
         self.image = pg.transform.smoothscale(pg.image.load(st.MACGYVER).convert_alpha(), (st.TILESIZE, st.TILESIZE))
         self.rect = self.image.get_rect()
-        screen.blit(self.image, (self.xtile * st.TILESIZE, self.ytile * st.TILESIZE))
+        screen.blit(self.image, self.rect)
 
     def move(self, level_structure, direction, screen): # perform MacGyver moves on user command
+        self.has_moved = False
         if direction == "right" and self.xtile < 14:
             if level_structure[self.ytile][self.xtile+1] != 'W':
+                self.past_xtile, self.past_ytile = self.xtile, self.ytile
                 self.xtile += 1
                 self.rect.move_ip(st.TILESIZE, 0)
-        elif direction == "gauche" and self.xtile > 0:
+                self.has_moved = True
+        elif direction == "left" and self.xtile > 0:
             if level_structure[self.ytile][self.xtile-1] != 'W':
+                self.past_xtile, self.past_ytile = self.xtile, self.ytile
                 self.xtile -= 1
                 self.rect.move_ip(-st.TILESIZE, 0)
-        elif direction == "haut" and self.ytile > 0:
-            if level_structure[self.ytilee-1][self.xtile] != 'W':
+                self.has_moved = True
+        elif direction == "up" and self.ytile > 0:
+            if level_structure[self.ytile-1][self.xtile] != 'W':
+                self.past_xtile, self.past_ytile = self.xtile, self.ytile
                 self.ytile -= 1
                 self.rect.move_ip(0, -st.TILESIZE)
-        elif direction == "bas" and self.ytile < 14:
+                self.has_moved = True
+        elif direction == "down" and self.ytile < 14:
             if level_structure[self.ytile+1][self.xtile] != 'W':
+                self.past_xtile, self.past_ytile = self.xtile, self.ytile
                 self.ytile += 1
                 self.rect.move_ip(0, st.TILESIZE)
+                self.has_moved = True
         else:
             pass # faire un son d'erreur
-        print(direction)
-        print(self.xtile, self.ytile)
-        screen.blit(self.image, (self.xtile * st.TILESIZE, self.ytile * st.TILESIZE))
-
-
+        
+        screen.blit(self.image, self.rect)
 
     def escape(self): # what happens if MacGyver escapes successfully.
         pass
