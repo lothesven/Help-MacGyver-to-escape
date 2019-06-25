@@ -1,7 +1,6 @@
 """ Class for different items to collect in the maze """
 # each objet is an instance of this class
 # have an item kind and position on the level
-# have a status collected
 
 import pygame as pg
 import random as rd
@@ -28,10 +27,3 @@ class Item:
 
     def render(self, screen): # is called to print object on game screen
         screen.blit(self.image, (self.x, self.y))
-
-    def take(self): # is called when macgyver is on same tile
-        self.collected = True
-        self.x, self.y = -40, -40 # moving the objet out of screen to prevent multiple take
-        print(self.kind, " is collected")
-
-    

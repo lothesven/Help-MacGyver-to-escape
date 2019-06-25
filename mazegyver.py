@@ -35,9 +35,10 @@ class Game:
         self.macgyver = ch.Character(self.screen) # character instanciation
 
         self.special_locations = [(600, 560)] # for special behaviour in game loop 
-        self.at_locations = ["guard"] # (600, 560) is Guard position
+        self.at_locations = ["guard"] # (600, 560) is Guard location
 
-        possible_locations = self.labyrinth.floor_locations.copy() # for random item positionning
+        possible_locations = self.labyrinth.floor_locations.copy() # locations for random item positionning
+        possible_locations.remove((st.MARGIN, 0)) # remove MacGyver starting location. Guard tile is not floor.
 
         needle = it.Item("needle", possible_locations) # item instanciation
         needle.render(self.screen)
@@ -110,13 +111,31 @@ class Game:
                         if (self.macgyver.x , self.macgyver.y) in self.special_locations: 
                             # when macgyver is on the same tile is on the same tile, collect object
                             index = self.special_locations.index((self.macgyver.x, self.macgyver.y))
-                            if index:
+                            if index: # index is positive if not on Guard location
                                 item = self.at_locations[index] # identification of concerned item
-                                item.take() # macgyver collect the item
-                                self.special_locations[index] = (item.x, item.y) # prevent macgyver from taking same item twice
                                 self.macgyver.items.append(self.at_locations[index].kind)
+                                item.x, item.y = -40, -40 # moving the objet out of screen to prevent multiple take
+                                self.special_locations[index] = (item.x, item.y) # prevent macgyver from taking same item twice
+                                self.blit_text(self.screen, "Inventory:", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
+                                item_inventory_position = (2 * (st.MARGIN * len(self.macgyver.items)) - st.MARGIN, st.HEIGHT + 30)
+                                self.screen.blit(item.image, item_inventory_position)
+                                if len(self.macgyver.items) > 2: # if all objects are collected
+                                    pg.draw.rect(self.screen, st.BLACK, (st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS))
+                                    self.blit_text(self.screen, "MacGyver stops to craft ...", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
+                                    pg.display.update()
+                                    pg.time.wait(1300)
+                                    pg.draw.rect(self.screen, st.BLACK, (st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS))
+                                    self.blit_text(self.screen, "Inventory:", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
+                                    siringe = it.Item("siringe", [(-40, -40)])
+                                    self.macgyver.items = [siringe.kind]
+                                    self.screen.blit(siringe.image, (st.MARGIN, st.HEIGHT + 30))
+
                             else:
                                 print("GUARD !", "MacGyver has", self.macgyver.items, "collected")
+                                if "siringe" in self.macgyver.items:
+                                    self.macgyver.escape()
+                                else:
+                                    self.macgyver.failure()
 
 
             pg.display.update()

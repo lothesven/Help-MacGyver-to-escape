@@ -26,16 +26,16 @@ class Level:
         for i in range(len(self.structure)):
                 for j in range(len(self.structure[i])):
                     if self.structure[i][j] == 'W':
-                        x_position = j * st.TILESIZE + 40
+                        x_position = j * st.TILESIZE + st.MARGIN
                         y_position = i * st.TILESIZE
                         screen.blit(self.wallnfloor, (x_position, y_position), self.wall)
                     elif self.structure[i][j] == '0':
-                        x_position = j * st.TILESIZE + 40
+                        x_position = j * st.TILESIZE + st.MARGIN
                         y_position = i * st.TILESIZE
                         self.floor_locations.append((x_position, y_position)) # stores possible item locations
                         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
                     elif self.structure[i][j] == 'G':
-                        x_position = j * st.TILESIZE + 40
+                        x_position = j * st.TILESIZE + st.MARGIN
                         y_position = i * st.TILESIZE
                         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
                         screen.blit(self.guard, (x_position, y_position))

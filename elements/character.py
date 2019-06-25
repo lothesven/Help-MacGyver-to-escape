@@ -50,7 +50,7 @@ class Character:
         screen.blit(self.image, (self.x, self.y))
 
     def escape(self): # what happens if MacGyver escapes successfully.
-        pass
+        print("MacGyver escapes ! :D")
 
     def failure(self): # what happens if MacGyver do not pass the guard.
-        pass
+        print("MacGyver dies :'(")
