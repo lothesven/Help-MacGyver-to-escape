@@ -4,10 +4,12 @@ from pygame import font
 import os.path
 
 DIRECTORY = os.path.abspath(os.path.dirname(__file__))
-HEIGHT, WIDTH = 680, 680
+HEIGHT, WIDTH = 600, 600
 MARGIN = 40
+FOOTLOGS = 80
 TILESIZE = 40
 
+MENU = os.path.join(DIRECTORY, "images", "macgyver_t.jpg")
 MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
 GUARD = os.path.join(DIRECTORY, "images", "guard.png")
 WALLSNFLOORS = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
@@ -22,11 +24,11 @@ VICTORY = os.path.join(DIRECTORY, "sounds", "victory.ogg")
 FAILURE = os.path.join(DIRECTORY, "sounds", "failure.ogg")
 
 font.init()
-GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Atmosphere-Regular.TTF"), 40)
+GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Niew CroMagnon.TTF"), 30)
 
 MAZE = os.path.join(DIRECTORY, "maze")
 
 WHITE = (255, 255, 255)
-GREY = (130, 130, 130)
+BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
