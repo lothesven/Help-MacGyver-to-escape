@@ -4,7 +4,8 @@ from pygame import font
 import os.path
 
 DIRECTORY = os.path.abspath(os.path.dirname(__file__))
-HEIGHT, WIDTH = 600, 600
+HEIGHT, WIDTH = 680, 680
+MARGIN = 40
 TILESIZE = 40
 
 MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
@@ -26,6 +27,6 @@ GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Atmosphere-Regular.TTF"),
 MAZE = os.path.join(DIRECTORY, "maze")
 
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+GREY = (130, 130, 130)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)

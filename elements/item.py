@@ -13,15 +13,14 @@ class Item:
         self.locations = locations
         self.kind = kind
         random_location = rd.sample(self.locations, 1)
-        print(random_location)
         self.x = random_location[0][0]
         self.y = random_location[0][1]
         self.collected = False
 
         if self.kind == "needle":
             self.image = pg.transform.smoothscale(pg.image.load(st.NEEDLE).convert(), (st.TILESIZE, st.TILESIZE))
-        elif self.kind == "plastic_tube":
-            self.image = pg.transform.smoothscale(pg.image.load(st.PLASTUBE).convert_alpha(), (st.TILESIZE, st.TILESIZE))
+        elif self.kind == "plastic tube":
+            self.image = pg.transform.smoothscale(pg.image.load(st.PLASTUBE).convert(), (st.TILESIZE, st.TILESIZE))
         elif self.kind == "ether":
             self.image = pg.transform.smoothscale(pg.image.load(st.ETHER).convert_alpha(), (st.TILESIZE, st.TILESIZE))
         elif self.kind == "siringe":
@@ -30,8 +29,9 @@ class Item:
     def render(self, screen): # is called to print object on game screen
         screen.blit(self.image, (self.x, self.y))
 
-    def collect(self): # is called when macgyver is on same tile
+    def take(self): # is called when macgyver is on same tile
         self.collected = True
-        pass
+        self.x, self.y = -40, -40 # moving the objet out of screen to prevent multiple take
+        print(self.kind, " is collected")
 
     
