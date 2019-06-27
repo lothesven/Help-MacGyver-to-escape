@@ -16,11 +16,12 @@ class Level:
                 if '\n' in ligne:
                     ligne.remove('\n')
                 self.structure.append(ligne)
-
-        self.wallnfloor = pg.transform.smoothscale(pg.image.load(st.WALLSNFLOORS).convert_alpha(), (800, 520))
-        self.wall = self.wallnfloor.get_rect(topleft = (640, 0), height = st.TILESIZE, width = st.TILESIZE)
-        self.floor = self.wallnfloor.get_rect(topleft = (720, 120), height = st.TILESIZE, width = st.TILESIZE)
-        self.guard = pg.transform.smoothscale(pg.image.load(st.GUARD).convert_alpha(), (st.TILESIZE, st.TILESIZE))
+        image = pg.image.load(st.WALLSNFLOORS).convert_alpha()
+        self.wallnfloor = pg.transform.smoothscale(image, (800, 520))
+        self.wall = self.wallnfloor.get_rect(topleft = (640, 0), height = 40, width = 40)
+        self.floor = self.wallnfloor.get_rect(topleft = (720, 120), height = 40, width = 40)
+        image = pg.image.load(st.GUARD).convert_alpha()
+        self.guard = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
 
     def screening(self, screen): # method to load level images on screen
         for i in range(len(self.structure)):
@@ -32,9 +33,11 @@ class Level:
                     elif self.structure[i][j] == '0':
                         x_position = j * st.TILESIZE + st.MARGIN
                         y_position = i * st.TILESIZE
-                        self.floor_locations.append((x_position, y_position)) # stores possible item locations
+                        self.floor_locations.append((x_position, y_position)) 
+                        # stores possible item locations
                         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
         screen.blit(self.guard, (600, 560))
 
-    def update(self, screen, x_position, y_position): # method to call when character move to blit back former character tile
+    def update(self, screen, x_position, y_position): 
+        # method to call when character move to blit back former character tile
         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
