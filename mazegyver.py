@@ -12,7 +12,9 @@ import elements.level as lv
 
 
 class Game:
-    def __init__(self): # Game definition and settings. 
+    """Game settings, menu screen and maze game loop."""
+    def __init__(self):
+        """Game definition and settings"""
 
         pg.init()
         self.clock = pg.time.Clock()
@@ -21,38 +23,46 @@ class Game:
         pg.display.set_caption("MazeGyver")
 
         self.font = st.GAMEFONT
-        # self.font = pg.font.SysFont("arial", 25)
 
         self.menu = False # Boolean that indicates whether menu is on screen or not
         self.running = False # Boolean that indicates whether game is running or not
 
-    def elements_creation(self): # All elements instanciation that happens after welcoming screen
+    def elements_creation(self):
+        """Instantiate all game elements using modules in elements subdirectory"""
 
-        self.screen.fill(st.BLACK) # Get rid of menu texts and image
+        self.screen.fill(st.BLACK) # Gets rid of menu texts and image
 
-        self.labyrinth = lv.Level(self.screen) # level instanciation
-        self.labyrinth.screening(self.screen) # level rending on screen
-        self.macgyver = ch.Character(self.screen) # character instanciation
+        self.labyrinth = lv.Level(self.screen)
+        self.labyrinth.screening(self.screen)
+        self.macgyver = ch.Character(self.screen)
 
-        self.special_locations = [(600, 560)] # for special behaviour in game loop 
-        self.at_locations = ["guard"] # (600, 560) is Guard location
+        self.special_locations = [(600, 560)] # Locations with special behaviour in game loop
+        self.at_locations = ["guard"] # (600, 560) refers to Guard location
 
-        possible_locations = self.labyrinth.floor_locations.copy() # locations for random item positionning
-        possible_locations.remove((st.MARGIN, 0)) # remove MacGyver starting location. Guard tile is not floor.
+        possible_locations = self.labyrinth.floor_locations.copy()
+        # Locations from level instance for random item positionning
 
-        needle = it.Item("needle", possible_locations) # item instanciation
+        possible_locations.remove((st.MARGIN, 0))
+        possible_locations.remove((600, 560))
+        # Removes MacGyver starting location and guard location
+
+        needle = it.Item("needle", possible_locations)
         needle.render(self.screen)
-        
+
         self.special_locations.append((needle.x, needle.y))
         self.at_locations.append(needle)
-        possible_locations.remove((needle.x, needle.y)) # to avoid possible item same location
+
+        possible_locations.remove((needle.x, needle.y))
+        # Prevents next item to be on same location
 
         plastic_tube = it.Item("plastic tube", possible_locations)
         plastic_tube.render(self.screen)
 
         self.special_locations.append((plastic_tube.x, plastic_tube.y))
         self.at_locations.append(plastic_tube)
-        possible_locations.remove((plastic_tube.x, plastic_tube.y)) # to avoid possible item same location
+
+        possible_locations.remove((plastic_tube.x, plastic_tube.y))
+        # Prevents next item to be on same location
 
         ether = it.Item("ether", possible_locations)
         ether.render(self.screen)
@@ -62,37 +72,41 @@ class Game:
 
         pg.key.set_repeat(400, 30) # Enables keyboard holding key
 
-        pg.display.update() # screen update
+        pg.display.update()
 
     def blit_text(self, surface, text, position, font, color):
-        words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
+        """Blit text inside a surface going to next line if text is too long.
+        Does not avoid too long text to exceed surface height"""
+        words = [word.split(' ') for word in text.splitlines()]
+        # 2D array where each row is a list of words.
         space = font.size(' ')[0]  # The width of a space.
         max_width = surface.get_width()
-        x, y = position
+        x_pos, y_pos = position
         for line in words:
             for word in line:
                 word_surface = font.render(word, 0, color)
                 word_width, word_height = word_surface.get_size()
-                if x + word_width >= max_width:
-                    x = position[0]  # Reset the x.
-                    y += word_height  # Start on new row.
-                surface.blit(word_surface, (x, y))
-                x += word_width + space
-            x = position[0]  # Reset the x.
-            y += word_height  # Start on new row.
+                if x_pos + word_width >= max_width:
+                    x_pos = position[0]  # Reset the x.
+                    y_pos += word_height  # Start on new row.
+                surface.blit(word_surface, (x_pos, y_pos))
+                x_pos += word_width + space
+            x_pos = position[0]  # Reset the x.
+            y_pos += word_height  # Start on new row.
 
 
-    def start(self): # Initialization of game loop
+    def start(self):
+        """Initialization of game loop"""
         self.running = True
 
         while self.running:
-            
+
             self.clock.tick(30)
 
             for event in pg.event.get():
                 if event.type == pg.QUIT: # Event to break off game loop
                     self.running = False
-                
+
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_RIGHT:
                         self.macgyver.move(self.labyrinth.structure, "right", self.screen)
@@ -103,12 +117,13 @@ class Game:
                     elif event.key == pg.K_DOWN:
                         self.macgyver.move(self.labyrinth.structure, "down", self.screen)
 
-                    if self.macgyver.has_moved: # blit back floor tile on previous position only if macgyver has moved
+                    if self.macgyver.has_moved:
+                        # blit back floor tile on previous position only if macgyver has moved
                         x_pos = self.macgyver.past_xtile * st.TILESIZE + st.MARGIN
                         y_pos = self.macgyver.past_ytile * st.TILESIZE
                         self.labyrinth.update(self.screen, x_pos, y_pos)
-            
-                        if (self.macgyver.x , self.macgyver.y) in self.special_locations: 
+
+                        if (self.macgyver.x, self.macgyver.y) in self.special_locations:
                             # when macgyver is on the same tile is on the same tile, collect object
                             index = self.special_locations.index((self.macgyver.x, self.macgyver.y))
                             if index: # index is positive if not on Guard location
@@ -134,20 +149,28 @@ class Game:
                                 print("GUARD !", "MacGyver has", self.macgyver.items, "collected")
                                 if "siringe" in self.macgyver.items:
                                     self.macgyver.escape()
+                                    self.running = False
+                                    self.welcome()
                                 else:
                                     self.macgyver.failure()
+                                    self.running = False
+                                    self.welcome()
 
 
             pg.display.update()
-        
-    def welcome(self): # introduction to the game // welcome() can call start()
+
+    def welcome(self): 
+        """Introduction to the game. 
+        Explains controlls and wait for user input to begin the game."""
         self.menu = True
 
-        title = pg.transform.smoothscale(pg.image.load(st.MENU).convert(), (st.WIDTH, int(st.HEIGHT/2)))
+        image = pg.image.load(st.MENU).convert()
+        title = pg.transform.smoothscale(image, (st.WIDTH, int(st.HEIGHT/2)))
         pg.font.init()
         intro = "Help MacGyver to escape from a maze.\n\n" \
                 "Use arrows on your keyboard to move in according directions.\n\n" \
-                "MacGyver must collect objects to craft a siringe before trying to pass the guard at exit."
+                "MacGyver must collect objects to craft a siringe before trying to pass " \
+                "the guard at exit."
         instruction = "Press any button to begin the game."
 
         self.screen.fill(st.BLACK)
@@ -167,7 +190,8 @@ class Game:
                     self.start()
 
 
-def main(): 
+def main():
+    """Defines launching steps"""
     game = Game() # Game instanciation
     game.welcome() # Loading menu wait for input to actually start the game
 

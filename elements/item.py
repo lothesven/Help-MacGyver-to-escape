@@ -8,7 +8,7 @@ import random as rd
 from data import settings as st
 
 class Item:
-    def __init__(self, kind, locations): # instanciation providing possible locations from level
+    def __init__(self, kind, locations):
         self.locations = locations
         self.kind = kind
         random_location = rd.sample(self.locations, 1)
@@ -17,13 +17,17 @@ class Item:
         self.collected = False
 
         if self.kind == "needle":
-            self.image = pg.transform.smoothscale(pg.image.load(st.NEEDLE).convert(), (st.TILESIZE, st.TILESIZE))
+            image = pg.image.load(st.NEEDLE).convert()
+            self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
         elif self.kind == "plastic tube":
-            self.image = pg.transform.smoothscale(pg.image.load(st.PLASTUBE).convert(), (st.TILESIZE, st.TILESIZE))
+            image = pg.image.load(st.PLASTUBE).convert()
+            self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
         elif self.kind == "ether":
-            self.image = pg.transform.smoothscale(pg.image.load(st.ETHER).convert_alpha(), (st.TILESIZE, st.TILESIZE))
+            image = pg.image.load(st.ETHER).convert_alpha()
+            self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
         elif self.kind == "siringe":
-            self.image = pg.transform.smoothscale(pg.image.load(st.SIRINGE).convert_alpha(), (st.TILESIZE, st.TILESIZE))
+            image = pg.image.load(st.SIRINGE).convert_alpha()
+            self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
 
     def render(self, screen): # is called to print object on game screen
         screen.blit(self.image, (self.x, self.y))

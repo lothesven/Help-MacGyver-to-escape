@@ -34,11 +34,7 @@ class Level:
                         y_position = i * st.TILESIZE
                         self.floor_locations.append((x_position, y_position)) # stores possible item locations
                         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
-                    elif self.structure[i][j] == 'G':
-                        x_position = j * st.TILESIZE + st.MARGIN
-                        y_position = i * st.TILESIZE
-                        screen.blit(self.wallnfloor, (x_position, y_position), self.floor)
-                        screen.blit(self.guard, (x_position, y_position))
+        screen.blit(self.guard, (600, 560))
 
     def update(self, screen, x_position, y_position): # method to call when character move to blit back former character tile
         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)

@@ -16,7 +16,8 @@ class Character:
         self.x = 0
         self.y = 0
         self.items = []
-        self.image = pg.transform.smoothscale(pg.image.load(st.MACGYVER).convert_alpha(), (st.TILESIZE, st.TILESIZE))
+        image = pg.image.load(st.MACGYVER).convert_alpha()
+        self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
         self.rect = self.image.get_rect()
         screen.blit(self.image, (self.xtile * st.TILESIZE + st.MARGIN, self.ytile * st.TILESIZE))
 
