@@ -2,18 +2,19 @@
 # each objet is an instance of this class
 # have an item kind and position on the level
 
-import pygame as pg
 import random as rd
+import pygame as pg
 
 from data import settings as st
 
 class Item:
+    """To fill"""
     def __init__(self, kind, locations):
         self.locations = locations
         self.kind = kind
         random_location = rd.sample(self.locations, 1)
-        self.x = random_location[0][0]
-        self.y = random_location[0][1]
+        self.x_pos = random_location[0][0]
+        self.y_pos = random_location[0][1]
         self.collected = False
 
         if self.kind == "needle":
@@ -29,5 +30,6 @@ class Item:
             image = pg.image.load(st.SIRINGE).convert_alpha()
             self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
 
-    def render(self, screen): # is called to print object on game screen
-        screen.blit(self.image, (self.x, self.y))
+    def render(self, screen):
+        """Prints object in the maze on game screen."""
+        screen.blit(self.image, (self.x_pos, self.y_pos))

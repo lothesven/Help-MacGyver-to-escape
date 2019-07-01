@@ -1,7 +1,9 @@
-# will contains all colors, fonts, sounds and sprites
+"""contains all settings constants such as:
+colors, fonts, sounds, images, positions, structures and sizes"""
+
+import os.path
 
 from pygame import font
-import os.path
 
 DIRECTORY = os.path.abspath(os.path.dirname(__file__))
 HEIGHT, WIDTH = 600, 600
@@ -10,6 +12,8 @@ FOOTLOGS = 80
 TILESIZE = 40
 
 MENU = os.path.join(DIRECTORY, "images", "macgyver_t.jpg")
+WIN = os.path.join(DIRECTORY, "images", "macgyver_victory.jpg")
+LOSE = os.path.join(DIRECTORY, "images", "macgyver_failure.jpg")
 MACGYVER = os.path.join(DIRECTORY, "images", "macgyver.png")
 GUARD = os.path.join(DIRECTORY, "images", "guard.png")
 WALLSNFLOORS = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
