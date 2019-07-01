@@ -50,8 +50,14 @@ class Character:
         self.y = self.ytile * st.TILESIZE
         screen.blit(self.image, (self.x, self.y))
 
-    def escape(self): # what happens if MacGyver escapes successfully.
+    def escape(self, sound): # what happens if MacGyver escapes successfully.
+        pg.mixer.init()
+        pg.mixer.stop()
+        pg.mixer.Sound.play(sound)
         print("MacGyver escapes ! :D")
 
-    def failure(self): # what happens if MacGyver do not pass the guard.
+    def failure(self, sound): # what happens if MacGyver do not pass the guard.
+        pg.mixer.init()
+        pg.mixer.stop()
+        pg.mixer.Sound.play(sound)
         print("MacGyver dies :'(")

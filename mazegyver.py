@@ -26,6 +26,18 @@ class Game:
 
         self.font = st.GAMEFONT
 
+        footsteps = pg.mixer.Sound(st.FOOTSTEPS)
+        footsteps.set_volume(0.3)
+        error = pg.mixer.Sound(st.ERROR)
+        error.set_volume(0.3)
+        ambiant = pg.mixer.Sound(st.AMBIANT)
+        ambiant.set_volume(0.5)
+        winning = pg.mixer.Sound(st.WINNING)
+        winning.set_volume(0.8)
+        victory = pg.mixer.Sound(st.VICTORY)
+        failure = pg.mixer.Sound(st.FAILURE)
+        self.sounds = [footsteps, error, ambiant, winning, victory, failure]
+
         self.menu = False # Boolean that indicates whether menu is on screen or not
         self.running = False # Boolean that indicates whether game is running or not
 
@@ -84,6 +96,8 @@ class Game:
     def start(self):
         """Initialization of game loop"""
         self.running = True
+        pg.mixer.stop() # stops music from potential previous game
+        pg.mixer.Sound.play(self.sounds[2], -1)
 
         while self.running:
 
@@ -108,6 +122,9 @@ class Game:
                         x_pos = self.macgyver.past_xtile * st.TILESIZE + st.MARGIN
                         y_pos = self.macgyver.past_ytile * st.TILESIZE
                         self.labyrinth.update(self.screen, x_pos, y_pos)
+                        pg.mixer.Sound.play(self.sounds[0])
+                    else:
+                        pg.mixer.Sound.play(self.sounds[1])
 
             if (self.macgyver.x, self.macgyver.y) in self.special_locations:
                 # when macgyver is on the same tile is on the same tile, collect object
@@ -125,6 +142,8 @@ class Game:
                     item_inventory_position = (item_x_pos, item_y_pos)
                     self.screen.blit(item.image, item_inventory_position)
                     if len(self.macgyver.items) > 2: # if all objects are collected
+                        pg.mixer.Sound.stop(self.sounds[2])
+                        pg.mixer.Sound.play(self.sounds[3], -1) # victory is at hand
                         rect_pos = st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS
                         pg.draw.rect(self.screen, st.BLACK, rect_pos)
                         long_text = "MacGyver has collected all items and stops to craft ..."
@@ -140,11 +159,11 @@ class Game:
                 else:
                     print("GUARD !", "MacGyver has", self.macgyver.items, "collected")
                     if "siringe" in self.macgyver.items:
-                        self.macgyver.escape()
+                        self.macgyver.escape(self.sounds[4])
                         self.running = False
                         self.welcome()
                     else:
-                        self.macgyver.failure()
+                        self.macgyver.failure(self.sounds[5])
                         self.running = False
                         self.welcome()
 
