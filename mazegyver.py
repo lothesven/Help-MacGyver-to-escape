@@ -6,6 +6,8 @@
 import pygame as pg
 
 import data.settings as st
+import data.functions.blit_text as bt
+
 import elements.character as ch
 import elements.item as it
 import elements.level as lv
@@ -27,8 +29,13 @@ class Game:
         self.menu = False # Boolean that indicates whether menu is on screen or not
         self.running = False # Boolean that indicates whether game is running or not
 
+        self.labyrinth = None
+        self.macgyver = None
+        self.special_locations = None
+        self.at_locations = None
+
     def elements_creation(self):
-        """Instantiate all game elements using modules in elements subdirectory"""
+        """Instantiate objects inside the game using modules in elements subdirectory"""
 
         self.screen.fill(st.BLACK) # Gets rid of menu texts and image
 
@@ -74,27 +81,6 @@ class Game:
 
         pg.display.update()
 
-    def blit_text(self, surface, text, position, font, color):
-        """Blit text inside a surface going to next line if text is too long.
-        Does not avoid too long text to exceed surface height"""
-        words = [word.split(' ') for word in text.splitlines()]
-        # 2D array where each row is a list of words.
-        space = font.size(' ')[0]  # The width of a space.
-        max_width = surface.get_width()
-        x_pos, y_pos = position
-        for line in words:
-            for word in line:
-                word_surface = font.render(word, 0, color)
-                word_width, word_height = word_surface.get_size()
-                if x_pos + word_width >= max_width:
-                    x_pos = position[0]  # Reset the x.
-                    y_pos += word_height  # Start on new row.
-                surface.blit(word_surface, (x_pos, y_pos))
-                x_pos += word_width + space
-            x_pos = position[0]  # Reset the x.
-            y_pos += word_height  # Start on new row.
-
-
     def start(self):
         """Initialization of game loop"""
         self.running = True
@@ -123,44 +109,50 @@ class Game:
                         y_pos = self.macgyver.past_ytile * st.TILESIZE
                         self.labyrinth.update(self.screen, x_pos, y_pos)
 
-                        if (self.macgyver.x, self.macgyver.y) in self.special_locations:
-                            # when macgyver is on the same tile is on the same tile, collect object
-                            index = self.special_locations.index((self.macgyver.x, self.macgyver.y))
-                            if index: # index is positive if not on Guard location
-                                item = self.at_locations[index] # identification of concerned item
-                                self.macgyver.items.append(self.at_locations[index].kind)
-                                item.x, item.y = -40, -40 # moving the objet out of screen to prevent multiple take
-                                self.special_locations[index] = (item.x, item.y) # prevent macgyver from taking same item twice
-                                self.blit_text(self.screen, "Inventory:", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
-                                item_inventory_position = (2 * (st.MARGIN * len(self.macgyver.items)) - st.MARGIN, st.HEIGHT + 30)
-                                self.screen.blit(item.image, item_inventory_position)
-                                if len(self.macgyver.items) > 2: # if all objects are collected
-                                    pg.draw.rect(self.screen, st.BLACK, (st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS))
-                                    self.blit_text(self.screen, "MacGyver stops to craft ...", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
-                                    pg.display.update()
-                                    pg.time.wait(1300)
-                                    pg.draw.rect(self.screen, st.BLACK, (st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS))
-                                    self.blit_text(self.screen, "Inventory:", (st.MARGIN, st.HEIGHT), self.font, st.GREEN)
-                                    siringe = it.Item("siringe", [(-40, -40)])
-                                    self.macgyver.items = [siringe.kind]
-                                    self.screen.blit(siringe.image, (st.MARGIN, st.HEIGHT + 30))
+            if (self.macgyver.x, self.macgyver.y) in self.special_locations:
+                # when macgyver is on the same tile is on the same tile, collect object
+                index = self.special_locations.index((self.macgyver.x, self.macgyver.y))
+                if index: # index is positive if not on Guard location
+                    item = self.at_locations[index] # identification of concerned item
+                    self.macgyver.items.append(self.at_locations[index].kind)
+                    item.x, item.y = -40, -40 # puts item out of screen ...
+                    self.special_locations[index] = (item.x, item.y)
+                    # ... and prevents macgyver from taking same item twice
+                    logs_pos = (st.MARGIN, st.HEIGHT)
+                    bt.blit_text(self.screen, "Inventory:", logs_pos, self.font, st.GREEN)
+                    item_x_pos = 2 * (st.MARGIN * len(self.macgyver.items)) - st.MARGIN
+                    item_y_pos = st.HEIGHT + 30
+                    item_inventory_position = (item_x_pos, item_y_pos)
+                    self.screen.blit(item.image, item_inventory_position)
+                    if len(self.macgyver.items) > 2: # if all objects are collected
+                        rect_pos = st.MARGIN, st.HEIGHT, st.WIDTH, st.FOOTLOGS
+                        pg.draw.rect(self.screen, st.BLACK, rect_pos)
+                        long_text = "MacGyver has collected all items and stops to craft ..."
+                        bt.blit_text(self.screen, long_text, logs_pos, self.font, st.GREEN)
+                        pg.display.update()
+                        pg.time.wait(2000)
+                        pg.draw.rect(self.screen, st.BLACK, rect_pos)
+                        bt.blit_text(self.screen, "Inventory:", logs_pos, self.font, st.GREEN)
+                        siringe = it.Item("siringe", [(-40, -40)])
+                        self.macgyver.items = [siringe.kind]
+                        self.screen.blit(siringe.image, (st.MARGIN, st.HEIGHT + 30))
 
-                            else:
-                                print("GUARD !", "MacGyver has", self.macgyver.items, "collected")
-                                if "siringe" in self.macgyver.items:
-                                    self.macgyver.escape()
-                                    self.running = False
-                                    self.welcome()
-                                else:
-                                    self.macgyver.failure()
-                                    self.running = False
-                                    self.welcome()
+                else:
+                    print("GUARD !", "MacGyver has", self.macgyver.items, "collected")
+                    if "siringe" in self.macgyver.items:
+                        self.macgyver.escape()
+                        self.running = False
+                        self.welcome()
+                    else:
+                        self.macgyver.failure()
+                        self.running = False
+                        self.welcome()
 
 
             pg.display.update()
 
-    def welcome(self): 
-        """Introduction to the game. 
+    def welcome(self):
+        """Introduction to the game.
         Explains controlls and wait for user input to begin the game."""
         self.menu = True
 
@@ -175,8 +167,8 @@ class Game:
 
         self.screen.fill(st.BLACK)
         self.screen.blit(title, (st.MARGIN, 0))
-        self.blit_text(self.screen, intro, (st.MARGIN, int(st.HEIGHT/2)), self.font, st.WHITE)
-        self.blit_text(self.screen, instruction, (st.MARGIN, st.HEIGHT), self.font, st.RED)
+        bt.blit_text(self.screen, intro, (st.MARGIN, int(st.HEIGHT/2)), self.font, st.WHITE)
+        bt.blit_text(self.screen, instruction, (st.MARGIN, st.HEIGHT), self.font, st.RED)
 
         pg.display.update()
 
