@@ -1,4 +1,4 @@
-"""contains all settings constants such as:
+"""Contains all settings constants such as:\n
 colors, fonts, sounds, images, positions, structures and sizes"""
 
 import os.path

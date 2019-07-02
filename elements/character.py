@@ -1,14 +1,15 @@
-"""class for played character behaviour """
-# instanciation method in the maze
-# moving method
-# status (position, objects collected)
+"""Class for played character behaviour."""
 
 import pygame as pg
 
 from data import settings as st
 
 class Character:
-    """ To fill """
+    """Character starting location is in the upper left corner of the maze.\n
+    This location changes on player input with a move() method.\n
+    Character has different images for tile and win/lose ending.\n
+    Winning the game requires a specific list of item which starts empty."""
+
     def __init__(self, screen):
         self.past_xtile = 0 # used for screen update
         self.past_ytile = 0 # used for screen update
@@ -31,6 +32,7 @@ class Character:
 
     def move(self, level_structure, direction, screen):
         """Performs MacGyver moves on user command."""
+
         self.has_moved = False
         if direction == "right" and self.xtile < 14:
             if level_structure[self.ytile][self.xtile+1] != 'W':
@@ -59,14 +61,14 @@ class Character:
 
     def escape(self, screen, sound):
         """Instructions if MacGyver escapes successfully."""
-        pg.mixer.init()
+
         pg.mixer.stop()
         pg.mixer.Sound.play(sound)
         screen.blit(self.images[1], (st.MARGIN, 0))
 
     def failure(self, screen, sound):
         """Instructions if MacGyver do not pass the guard."""
-        pg.mixer.init()
+
         pg.mixer.stop()
         pg.mixer.Sound.play(sound)
         screen.blit(self.images[2], (st.MARGIN, 0))

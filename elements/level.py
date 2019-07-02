@@ -1,14 +1,18 @@
-""" level creation reading the file "maze" """
-# while doing so, create an array of free space tiles list of tuples.
-# Each tuple in that list can be a location for collectable object's random instanciations
+"""Class for level creation, display and update."""
 
 import pygame as pg
 from data import settings as st
 
 class Level:
-    """To fill"""
+    """Level creation here uses a single file "maze".\n
+    It could be used as a canvas for more..."""
+
     def __init__(self):
-        """Reads "maze" file and store it in a list."""
+        """Reads the file "maze" and builds a list of rows. Each row is a list of tiles.\n
+        Each tile is either a floor or a wall. Top left and bottom right tiles must be floor.\n
+        When a tile is a floor, adds its position consisting of a tuple to a list.\n
+        That list is then used for items random instanciations"""
+
         self.structure = []
         self.floor_locations = []
 
@@ -26,7 +30,8 @@ class Level:
         self.guard = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
 
     def screening(self, screen):
-        """ Loads level images on screen."""
+        """Loads level images on screen."""
+
         for i in range(len(self.structure)):
             for j in range(len(self.structure[i])):
                 if self.structure[i][j] == 'W':
@@ -43,4 +48,5 @@ class Level:
 
     def update(self, screen, x_position, y_position):
         """Blits back former character tile to floor tile when character moves."""
+
         screen.blit(self.wallnfloor, (x_position, y_position), self.floor)

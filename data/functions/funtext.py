@@ -3,6 +3,7 @@
 def blit_text(surface, text, position, font, color):
     """Blit text inside a surface going to next line if text is too long.
     Does not avoid too long text to exceed surface height"""
+
     words = [word.split(' ') for word in text.splitlines()]
     # 2D array where each row is a list of words.
     space = font.size(' ')[0]  # The width of a space.

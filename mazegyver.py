@@ -12,9 +12,9 @@ import elements.character as ch
 import elements.item as it
 import elements.level as lv
 
-
 class Game:
     """Game settings, menu screen and maze game loop."""
+
     def __init__(self):
         """Game definition and settings"""
 
@@ -180,13 +180,12 @@ class Game:
                     running = False
                     self.welcome()
 
-
             pg.display.update()
 
     def welcome(self):
         """Introduction to the game.
         Explains controlls and wait for user input to begin the game."""
-        
+
         menu = True # Boolean that indicates whether menu is on screen or not
 
         image = pg.image.load(st.MENU).convert()
@@ -216,6 +215,7 @@ class Game:
 
 def main():
     """Defines launching steps"""
+
     game = Game() # Game instanciation
     game.welcome() # Loads menu screen and wait user input to actually start the game
 
