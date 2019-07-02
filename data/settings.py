@@ -30,7 +30,7 @@ VICTORY = os.path.join(DIRECTORY, "sounds", "MacGyver-Theme-Song.ogg")
 FAILURE = os.path.join(DIRECTORY, "sounds", "game-fail-sound-effect.ogg")
 
 font.init()
-GAMEFONT = font.Font(os.path.join(DIRECTORY, "fonts", "Niew CroMagnon.TTF"), 30)
+FONT = font.Font(os.path.join(DIRECTORY, "fonts", "Niew CroMagnon.TTF"), 30)
 
 MAZE = os.path.join(DIRECTORY, "maze")
 

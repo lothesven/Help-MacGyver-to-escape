@@ -24,22 +24,19 @@ class Game:
         self.screen = pg.display.set_mode((st.WIDTH + st.MARGIN * 2, st.HEIGHT + st.FOOTLOGS))
         pg.display.set_caption("MazeGyver")
 
-        self.font = st.GAMEFONT
-
         footsteps = pg.mixer.Sound(st.FOOTSTEPS)
-        footsteps.set_volume(0.3)
+        footsteps.set_volume(0.5)
         error = pg.mixer.Sound(st.ERROR)
-        error.set_volume(0.3)
+        error.set_volume(0.1)
         ambiant = pg.mixer.Sound(st.AMBIANT)
-        ambiant.set_volume(0.5)
+        ambiant.set_volume(0.1)
         winning = pg.mixer.Sound(st.WINNING)
-        winning.set_volume(0.8)
+        winning.set_volume(0.2)
         victory = pg.mixer.Sound(st.VICTORY)
+        victory.set_volume(0.3)
         failure = pg.mixer.Sound(st.FAILURE)
+        failure.set_volume(0.3)
         self.sounds = [footsteps, error, ambiant, winning, victory, failure]
-
-        self.menu = False # Boolean that indicates whether menu is on screen or not
-        self.running = False # Boolean that indicates whether game is running or not
 
         self.labyrinth = None
         self.macgyver = None
@@ -95,11 +92,13 @@ class Game:
 
     def start(self):
         """Initialization of game loop"""
-        self.running = True
+
+        running = True # Boolean that indicates whether game is running or not
+
         pg.mixer.stop() # stops music from potential previous game
         pg.mixer.Sound.play(self.sounds[2], -1)
 
-        while self.running:
+        while running:
 
             self.clock.tick(30)
             logs_pos = (st.MARGIN, st.HEIGHT)
@@ -107,7 +106,7 @@ class Game:
 
             for event in pg.event.get():
                 if event.type == pg.QUIT: # Event to break off game loop
-                    self.running = False
+                    running = False
 
                 elif event.type == pg.KEYDOWN:
                     if event.key == pg.K_RIGHT:
@@ -118,6 +117,8 @@ class Game:
                         self.macgyver.move(self.labyrinth.structure, "up", self.screen)
                     elif event.key == pg.K_DOWN:
                         self.macgyver.move(self.labyrinth.structure, "down", self.screen)
+                    else:
+                        self.macgyver.has_moved = False
 
                     if self.macgyver.has_moved:
                         # blit back floor tile on previous position only if macgyver has moved
@@ -138,7 +139,7 @@ class Game:
                     self.special_locations[index] = (item.x_pos, item.y_pos)
                     # ... and prevents macgyver from taking same item twice
 
-                    ft.blit_text(self.screen, "Inventory:", logs_pos, self.font, st.GREEN)
+                    ft.blit_text(self.screen, "Inventory:", logs_pos, st.FONT, st.GREEN)
                     item_inventory_x = 2 * (st.MARGIN * len(self.macgyver.items)) - st.MARGIN
                     item_inventory_y = st.HEIGHT + 30
                     item_inventory_position = (item_inventory_x, item_inventory_y)
@@ -150,11 +151,11 @@ class Game:
 
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
                         long_text = "MacGyver has collected all items and stops to craft ..."
-                        ft.blit_text(self.screen, long_text, logs_pos, self.font, st.GREEN)
+                        ft.blit_text(self.screen, long_text, logs_pos, st.FONT, st.GREEN)
                         pg.display.update()
                         pg.time.wait(2000)
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
-                        ft.blit_text(self.screen, "Inventory:", logs_pos, self.font, st.GREEN)
+                        ft.blit_text(self.screen, "Inventory:", logs_pos, st.FONT, st.GREEN)
 
                         siringe = it.Item("siringe", [(-40, -40)])
                         self.macgyver.items = [siringe.kind]
@@ -167,16 +168,16 @@ class Game:
                         self.macgyver.escape(self.screen, self.sounds[4])
                         wing_text = "MacGyver knocks the Guard out and escapes !\n" \
                                     "Congratulations !"
-                        ft.blit_text(self.screen, wing_text, logs_pos, self.font, st.GREEN)
+                        ft.blit_text(self.screen, wing_text, logs_pos, st.FONT, st.GREEN)
                     else:
                         self.macgyver.failure(self.screen, self.sounds[5])
                         losg_text = "MacGyver fights the Guard but to no avail.\n" \
                                     "He eventually gets shot and dies !"
-                        ft.blit_text(self.screen, losg_text, logs_pos, self.font, st.RED)
+                        ft.blit_text(self.screen, losg_text, logs_pos, st.FONT, st.RED)
 
                     pg.display.update()
                     pg.time.wait(6000)
-                    self.running = False
+                    running = False
                     self.welcome()
 
 
@@ -185,11 +186,11 @@ class Game:
     def welcome(self):
         """Introduction to the game.
         Explains controlls and wait for user input to begin the game."""
-        self.menu = True
+        
+        menu = True # Boolean that indicates whether menu is on screen or not
 
         image = pg.image.load(st.MENU).convert()
         title = pg.transform.smoothscale(image, (st.WIDTH, int(st.HEIGHT/2)))
-        pg.font.init()
         intro = "Help MacGyver to escape from a maze.\n\n" \
                 "Use arrows on your keyboard to move in according directions.\n\n" \
                 "MacGyver must collect objects to craft a siringe before trying to pass " \
@@ -198,17 +199,17 @@ class Game:
 
         self.screen.fill(st.BLACK)
         self.screen.blit(title, (st.MARGIN, 0))
-        ft.blit_text(self.screen, intro, (st.MARGIN, int(st.HEIGHT/2)), self.font, st.WHITE)
-        ft.blit_text(self.screen, instruction, (st.MARGIN, st.HEIGHT), self.font, st.RED)
+        ft.blit_text(self.screen, intro, (st.MARGIN, int(st.HEIGHT/2)), st.FONT, st.WHITE)
+        ft.blit_text(self.screen, instruction, (st.MARGIN, st.HEIGHT), st.FONT, st.RED)
 
         pg.display.update()
 
-        while self.menu:
+        while menu:
             for event in pg.event.get():
                 if event.type == pg.QUIT: # Event to break off game loop
-                    self.menu = False
+                    menu = False
                 elif event.type == pg.KEYDOWN or event.type == pg.MOUSEBUTTONDOWN:
-                    self.menu = False
+                    menu = False
                     self.elements_creation()
                     self.start()
 

@@ -27,7 +27,6 @@ class Character:
         failure = pg.transform.smoothscale(image, (st.HEIGHT, st.WIDTH))
 
         self.images = [tile, escape, failure]
-        self.rect = self.images[0].get_rect()
         screen.blit(self.images[0], (self.xtile * 40 + st.MARGIN, self.ytile * 40))
 
     def move(self, level_structure, direction, screen):
