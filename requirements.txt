@@ -1,5 +1,2 @@
-"""Dependencies installed in environment.
-Pylint is optional but can be usefull here for code assessment."""
-
-pylint==2.3.1  # "-m pip install -U pylint"
-pygame==1.9.6 # "pip install pygame"
+pylint==2.3.1  # Pylint is optional but can be usefull here for code assessment
+pygame==1.9.6 # Core library
