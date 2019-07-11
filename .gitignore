@@ -1,4 +1,4 @@
 environment/
-/data/__pycache__/
-/elements/__pycache__/
-/.vscode
+data/__pycache__/
+elements/__pycache__/
+.vscode/
