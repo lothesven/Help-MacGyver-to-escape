@@ -22,15 +22,15 @@ PLASTUBE = os.path.join(DIRECTORY, "images", "plastic_tube.png")
 ETHER = os.path.join(DIRECTORY, "images", "ether.png")
 SIRINGE = os.path.join(DIRECTORY, "images", "siringe.png")
 
-FOOTSTEPS = os.path.join(DIRECTORY, "sounds", "38874__swuing__footstep-grass.ogg")
-ERROR = os.path.join(DIRECTORY, "sounds", "450616__breviceps__8-bit-error.ogg")
-AMBIANT = os.path.join(DIRECTORY, "sounds", "MacGyver-Theme-Song-Intro.ogg")
-WINNING = os.path.join(DIRECTORY, "sounds", "MacGyver-Theme-Song-Middle.ogg")
-VICTORY = os.path.join(DIRECTORY, "sounds", "MacGyver-Theme-Song.ogg")
-FAILURE = os.path.join(DIRECTORY, "sounds", "game-fail-sound-effect.ogg")
+FOOTSTEPS = os.path.join(DIRECTORY, "sounds", "footsteps.ogg")
+ERROR = os.path.join(DIRECTORY, "sounds", "error.ogg")
+AMBIANT = os.path.join(DIRECTORY, "sounds", "ambiant.ogg")
+WINNING = os.path.join(DIRECTORY, "sounds", "winning.ogg")
+VICTORY = os.path.join(DIRECTORY, "sounds", "victory.ogg")
+FAILURE = os.path.join(DIRECTORY, "sounds", "failure.ogg")
 
 font.init()
-FONT = font.Font(os.path.join(DIRECTORY, "fonts", "Niew CroMagnon.TTF"), 30)
+FONT = font.Font(os.path.join(DIRECTORY, "fonts", "niew_cromagnon.ttf"), 30)
 
 MAZE = os.path.join(DIRECTORY, "maze")
 
