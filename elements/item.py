@@ -26,8 +26,8 @@ class Item:
         elif self.kind == "ether":
             image = pg.image.load(st.ETHER).convert_alpha()
             self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
-        elif self.kind == "siringe":
-            image = pg.image.load(st.SIRINGE).convert_alpha()
+        elif self.kind == "syringe":
+            image = pg.image.load(st.SYRINGE).convert_alpha()
             self.image = pg.transform.smoothscale(image, (st.TILESIZE, st.TILESIZE))
 
     def render(self, screen):

@@ -20,7 +20,7 @@ WALLSNFLOORS = os.path.join(DIRECTORY, "images", "wallsnfloors.png")
 NEEDLE = os.path.join(DIRECTORY, "images", "needle.png")
 PLASTUBE = os.path.join(DIRECTORY, "images", "plastic_tube.png")
 ETHER = os.path.join(DIRECTORY, "images", "ether.png")
-SIRINGE = os.path.join(DIRECTORY, "images", "siringe.png")
+SYRINGE = os.path.join(DIRECTORY, "images", "syringe.png")
 
 FOOTSTEPS = os.path.join(DIRECTORY, "sounds", "footsteps.ogg")
 ERROR = os.path.join(DIRECTORY, "sounds", "error.ogg")

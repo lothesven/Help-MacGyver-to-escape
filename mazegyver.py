@@ -157,14 +157,14 @@ class Game:
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
                         ft.blit_text(self.screen, "Inventory:", logs_pos, st.FONT, st.GREEN)
 
-                        siringe = it.Item("siringe", [(-40, -40)])
-                        self.macgyver.items = [siringe.kind]
-                        self.screen.blit(siringe.image, (st.MARGIN, st.HEIGHT + 30))
+                        syringe = it.Item("syringe", [(-40, -40)])
+                        self.macgyver.items = [syringe.kind]
+                        self.screen.blit(syringe.image, (st.MARGIN, st.HEIGHT + 30))
 
                 else:
                     pg.draw.rect(self.screen, st.BLACK, logs_rect)
 
-                    if "siringe" in self.macgyver.items:
+                    if "syringe" in self.macgyver.items:
                         self.macgyver.escape(self.screen, self.sounds[4])
                         wing_text = "MacGyver knocks the Guard out and escapes !\n" \
                                     "Congratulations !"
@@ -192,7 +192,7 @@ class Game:
         title = pg.transform.smoothscale(image, (st.WIDTH, int(st.HEIGHT/2)))
         intro = "Help MacGyver to escape from a maze.\n\n" \
                 "Use arrows on your keyboard to move in according directions.\n\n" \
-                "MacGyver must collect objects to craft a siringe before trying to pass " \
+                "MacGyver must collect objects to craft a syringe before trying to pass " \
                 "the guard at exit."
         instruction = "Press any button to begin the game."
 

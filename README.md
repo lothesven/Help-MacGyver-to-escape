@@ -1,5 +1,5 @@
 # Help-MacGyver-to-escape
-Labyrinth game coded with Pygame in which the player plays MacGyver. Player needs to collect objects in the labyrinth to pass the guard at exit location.
+Labyrinth game coded with *Pygame 3.7.3* in which the player plays MacGyver. Player needs to collect objects in the labyrinth to pass the guard at exit location.
 
 Please check the link below for source code:
 https://github.com/lothesven/Help-MacGyver-to-escape
@@ -18,22 +18,22 @@ pip install virtualenv
 ***********
 Windows (Powershell):
 
-virtualenv -p py env
-./env/scripts/activate.ps1
+```virtualenv -p py env```
+```./env/scripts/activate.ps1```
 
 ***********
 Mac OS or LINUX:
 
-virtualenv -p python3 env
-source env/bin/activate
+```virtualenv -p python env```
+```source env/bin/activate```
 
 ***********
 
 3) Install all dependencies contained in "requirements.txt". To do so, please run the command line below in command terminal:
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
 
 
 4) Launch the game by running the command line below in command terminal:
 
-python mazegyver.py
+```python mazegyver.py```
