@@ -175,6 +175,7 @@ class Game:
                                     "He eventually gets shot and dies !"
                         ft.blit_text(self.screen, losg_text, logs_pos, st.FONT, st.RED)
 
+                    pg.event.pump()
                     pg.display.update()
                     pg.time.wait(6000)
                     running = False
