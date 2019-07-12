@@ -154,7 +154,9 @@ class Game:
                         ft.blit_text(self.screen, long_text, logs_pos, st.FONT, st.GREEN)
                         pg.event.pump()
                         pg.display.update()
-                        pg.time.wait(2000)
+                        for _ in range(2):
+                            pg.event.pump()
+                            pg.time.wait(1000)
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
                         ft.blit_text(self.screen, "Inventory:", logs_pos, st.FONT, st.GREEN)
 
@@ -176,9 +178,10 @@ class Game:
                                     "He eventually gets shot and dies !"
                         ft.blit_text(self.screen, losg_text, logs_pos, st.FONT, st.RED)
 
-                    pg.event.pump()
                     pg.display.update()
-                    pg.time.wait(6000)
+                    for _ in range(6):
+                        pg.event.pump()
+                        pg.time.wait(1000)
                     running = False
                     self.welcome()
 
