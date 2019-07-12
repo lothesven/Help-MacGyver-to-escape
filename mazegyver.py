@@ -152,6 +152,7 @@ class Game:
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
                         long_text = "MacGyver has collected all items and stops to craft ..."
                         ft.blit_text(self.screen, long_text, logs_pos, st.FONT, st.GREEN)
+                        pg.event.pump()
                         pg.display.update()
                         pg.time.wait(2000)
                         pg.draw.rect(self.screen, st.BLACK, logs_rect)
