@@ -1,2 +1,2 @@
-pylint==2.3.1  # Pylint is optional but can be usefull here for code assessment
+pylint==4.0.9  # Pylint is optional but can be usefull here for code assessment
 pygame==1.9.6 # Core library
